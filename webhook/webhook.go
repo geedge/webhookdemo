@@ -253,14 +253,14 @@ func mutationRequired(ignoredList []string, metadata *metav1.ObjectMeta) bool {
 func createPatch(deployment appsv1.Deployment, addAnnotations map[string]string, addLabels map[string]string) ([]byte, error) {
 
 	var patches []patchOperation
-	objectMeta := deployment.ObjectMeta
-	labels := objectMeta.Labels
-	annotations := objectMeta.Annotations
-	labelsPatch := updateLabels(labels, addLabels)
-	annotationsPatch := updateAnnotation(annotations, addAnnotations)
+	// objectMeta := deployment.ObjectMeta
+	// labels := objectMeta.Labels
+	// annotations := objectMeta.Annotations
+	// labelsPatch := updateLabels(labels, addLabels)
+	// annotationsPatch := updateAnnotation(annotations, addAnnotations)
 	containersPatch := updateContainers(deployment)
-	patches = append(patches, labelsPatch...)
-	patches = append(patches, annotationsPatch...)
+	// patches = append(patches, labelsPatch...)
+	// patches = append(patches, annotationsPatch...)
 	patches = append(patches, containersPatch...)
 
 	//打印出来看一下
@@ -309,13 +309,13 @@ func updateLabels(target map[string]string, added map[string]string) (patch []pa
 	return patch
 }
 
-var addContainer = []corev1.Container{
-	{
-		Name:    "side-car",
-		Image:   "busybox",
-		Command: []string{"/bin/sleep", "infinity"},
-	},
-}
+// var addContainer = []corev1.Container{
+// 	{
+// 		Name:    "side-car",
+// 		Image:   "busybox",
+// 		Command: []string{"/bin/sleep", "infinity"},
+// 	},
+// }
 
 func updateContainers(deployment appsv1.Deployment) (patch []patchOperation) {
 	currentDeployment := deployment.DeepCopy()
